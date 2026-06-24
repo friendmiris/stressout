@@ -41,6 +41,8 @@
   /* 한국어 단어 단위 줄바꿈 강제 — '학교입니다'가 '학교입니/다'로 잘리지 않음 */
   *{word-break:keep-all !important; overflow-wrap:break-word !important; word-wrap:break-word !important; line-break:strict;}
   html,body{height:100%;}
+  /* 모바일 브라우저(특히 삼성인터넷)의 자동 글자 확대 방지 — 글씨가 제멋대로 커지는 문제 해결 */
+  html{-webkit-text-size-adjust:100%; -moz-text-size-adjust:100%; text-size-adjust:100%;}
   body{
     font-family:'Pretendard','Pretendard Variable',-apple-system,sans-serif;
     background:radial-gradient(120% 80% at 50% 0%, #CDEEFA 0%, #B6E3F5 50%, #A6DAEF 100%);
@@ -84,57 +86,60 @@
   /* ── 모바일 전용(≤767px): 글씨·요소를 한 단계 작게 (PC/태블릿은 그대로) ── */
   @media (max-width:767px){
     /* 본문/대화/선택지 */
-    .bub-a,.bub-m{font-size:18.5px; line-height:1.6;}
-    .opt{font-size:18px; padding:13px 15px;}
-    .opt .lead{font-size:18.5px;} .opt .sub2{font-size:15px;}
-    .narr{font-size:18.5px;} .narr .pull{font-size:21px;}
-    .sub{font-size:17px;}
-    .rhint{font-size:15.5px;}
-    .chatInput,.typebar input{font-size:17px;}
-    .replies .typebar input{font-size:17px;}
+    .bub-a,.bub-m{font-size:16.5px; line-height:1.58;}
+    .opt{font-size:16px; padding:12px 14px;}
+    .opt .lead{font-size:16.5px;} .opt .sub2{font-size:13.5px;}
+    .narr{font-size:17px;} .narr .pull{font-size:19px;}
+    .sub{font-size:16px;}
+    .rhint{font-size:14.5px;}
+    .chatInput,.typebar input{font-size:16px;}
+    .replies .typebar input{font-size:16px;}
     /* 헤더/진행 */
-    .chead .nm{font-size:18px;} .chead .st{font-size:13.5px;} .back{font-size:16px;}
+    .chead .nm{font-size:17px;} .chead .st{font-size:13px;} .back{font-size:15px;}
     /* 랜딩 */
-    .ttl{font-size:clamp(25px,7.2vw,30px); line-height:1.4;}
-    .badge{font-size:14.5px;}
-    .countpill{font-size:16px;} .lfoot{font-size:15px;}
-    .floaties{font-size:30px;}
+    .ttl{font-size:clamp(23px,6.6vw,28px); line-height:1.42;}
+    .badge{font-size:14px;}
+    .countpill{font-size:15px;} .lfoot{font-size:14px;}
+    .floaties{font-size:28px;}
     /* 결과 */
-    .r-kicker{font-size:14px;}
-    .r-type{font-size:clamp(30px,8.5vw,38px);} .r-type small{font-size:14px;}
-    .gauge-num{font-size:clamp(46px,13vw,58px);}
-    .r-tag{font-size:14.5px;}
-    .sec-label .tt{font-size:20px;} .sec-label .en{font-size:12.5px;}
-    .score-nm{font-size:17px;} .score-nm .lab{font-size:14px;} .score-vv{font-size:19px;}
-    .score-meta{font-size:14.5px;}
-    .sit .h{font-size:17px;} .sit .b{font-size:16px;}
-    .grow .gh{font-size:17px;} .grow .gb{font-size:16px;} .grow .try{font-size:15px;} .grow .n{font-size:21px;}
+    .r-kicker{font-size:13.5px;}
+    .r-type{font-size:clamp(28px,8vw,36px);} .r-type small{font-size:13.5px;}
+    .gauge-num{font-size:clamp(44px,12vw,56px);}
+    .r-tag{font-size:14px;}
+    .sec-label .tt{font-size:19px;} .sec-label .en{font-size:12px;}
+    .score-nm{font-size:16px;} .score-nm .lab{font-size:13.5px;} .score-vv{font-size:18px;}
+    .score-meta{font-size:14px;}
+    .sit .h{font-size:16px;} .sit .b{font-size:15px;}
+    .grow .gh{font-size:16px;} .grow .gb{font-size:15px;} .grow .try{font-size:14.5px;} .grow .n{font-size:20px;}
     /* 잠긴 분석 카드 */
-    .locked-item .lh{font-size:18px;} .locked-item .lb{font-size:15.5px;} .locked-item .lscore{font-size:20px;}
-    .locked-h{font-size:20px;} .locked-d{font-size:16px;} .locked-btn{font-size:17px;} .locked-mini{font-size:14.5px;}
+    .locked-item .lh{font-size:17px;} .locked-item .lb{font-size:15px;} .locked-item .lscore{font-size:19px;}
+    .locked-h{font-size:19px;} .locked-d{font-size:15px;} .locked-btn{font-size:16px;} .locked-mini{font-size:14px;}
     /* 프로그램 안내 */
-    .ses-hero h2{font-size:22px;} .ses-hero .meta{font-size:15px;} .ses-hero .ticket{font-size:13.5px;}
-    .ses-lede{font-size:17px;} .ses-sechead .stt{font-size:18px;}
-    .step .sh{font-size:17px;} .step .se{font-size:13px;} .step .sd{font-size:15px;}
-    .ses-info .ich .il{font-size:14px;} .ses-info .ich .iv{font-size:17px;} .ses-info .ich .iv small{font-size:14px;}
-    .ses-note .nh{font-size:17px;} .ses-note .nb{font-size:16.5px;}
-    .review .stars{font-size:17px;} .review .rtext{font-size:16.5px;} .review .rwho{font-size:15px;}
-    .ses-disc{font-size:14px;}
+    .ses-hero h2{font-size:21px;} .ses-hero .meta{font-size:14.5px;} .ses-hero .ticket{font-size:13px;}
+    .ses-lede{font-size:16px;} .ses-sechead .stt{font-size:17px;}
+    .step .sh{font-size:16px;} .step .se{font-size:12.5px;} .step .sd{font-size:14.5px;}
+    .ses-info .ich .il{font-size:13.5px;} .ses-info .ich .iv{font-size:16px;} .ses-info .ich .iv small{font-size:13.5px;}
+    .ses-note .nh{font-size:16px;} .ses-note .nb{font-size:15.5px;}
+    .review .stars{font-size:16px;} .review .rtext{font-size:15.5px;} .review .rwho{font-size:14px;}
+    .ses-disc{font-size:13.5px;}
     /* 신청 폼 */
-    .apply-hero h2{font-size:21px;} .apply-hero p{font-size:15px;} .apply-hero .ticket{font-size:13.5px;}
-    .field>label{font-size:17px;} .field>label .multi,.field>label .opt-tag{font-size:14.5px;}
-    .inp{font-size:17px; padding:13px 15px;} textarea.inp{font-size:17px;}
-    .choice{font-size:16.5px; padding:10px 14px;}
-    .cal-head .cm{font-size:19px;} .cal-cell{font-size:17px;} .cal-dow{font-size:14px;} .cal-picked{font-size:15.5px;}
-    .check .ct{font-size:15px;} .privacy{font-size:13.5px;}
+    .apply-hero h2{font-size:20px;} .apply-hero p{font-size:14.5px;} .apply-hero .ticket{font-size:13px;}
+    .field>label{font-size:16px;} .field>label .multi,.field>label .opt-tag{font-size:13.5px;}
+    .inp{font-size:16px; padding:12px 14px;} textarea.inp{font-size:16px;}
+    /* 선택 칩: 3열 균일 그리드로 정렬 (삐뚤빼뚤 방지) */
+    .choices{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+    .choice{font-size:15px; padding:11px 8px; text-align:center; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; min-height:46px; line-height:1.25;}
+    .cal-head .cm{font-size:18px;} .cal-cell{font-size:16px;} .cal-dow{font-size:13.5px;} .cal-picked{font-size:14.5px;}
+    .check .ct{font-size:14.5px;} .privacy{font-size:13px;}
     /* 버튼 */
-    .cta{font-size:18px; padding:15px;}
+    .cta{font-size:17px; padding:14px;}
     /* 완료/공유 */
-    .done h2{font-size:22px;} .done p{font-size:17px;} .done .recap .rr{font-size:18px;} .done .recap .rr .k{font-size:15px;}
-    .cp-top .ty{font-size:21px;} .cp-top .sl{font-size:15px;} .cp-meta{font-size:13.5px;}
-    .sbtn{font-size:18px;} .share-q{font-size:15px;}
+    .done h2{font-size:21px;} .done p{font-size:16px;} .done .recap .rr{font-size:17px;} .done .recap .rr .k{font-size:14.5px;}
+    .cp-top .ty{font-size:20px;} .cp-top .sl{font-size:14.5px;} .cp-meta{font-size:13px;}
+    .sbtn{font-size:17px;} .share-q{font-size:14.5px;}
     /* 로딩 */
-    .load-t{font-size:21px;} .load-s{font-size:16.5px;} .lstep{font-size:16px;}
+    .load-t{font-size:20px;} .load-s{font-size:15.5px;} .lstep{font-size:15px;}
   }
   /* 태블릿 */
   @media (min-width:768px){
