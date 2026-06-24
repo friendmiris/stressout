@@ -755,7 +755,7 @@
           <div class="ty serif" id="cp-type">끓기 직전의 여름</div>
           <div class="sl">5분 대화로 알아본 나의 스트레스 지수</div>
         </div>
-        <div class="cp-meta"><span id="cp-url">stress-out.app/r/SO-72</span><span>🍉 Stress OUT</span></div>
+        <div class="cp-meta"><span id="cp-url">stressout-seven.vercel.app</span><span>🍉 Stress OUT</span></div>
       </div>
       <button class="sbtn" style="background:#FEE500;color:#3C1E1E" onclick="openShare('kakao')">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.6-.8 3-.1.5.2.5.4.4.2-.1 2.6-1.8 3.6-2.5.7.1 1.4.2 2.1.2 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>
@@ -1119,7 +1119,7 @@ function renderResult(){
   document.getElementById('gaugeNum').innerHTML=curScore+'<span class="unit"> / 100</span>';
   document.getElementById('gaugeNum').style.color=curType.color;
   document.getElementById('cp-type').textContent=curType.name;
-  const cu=document.getElementById('cp-url'); if(cu){ cu.textContent='stress-out.app/r/'+curType.code; }
+  const cu=document.getElementById('cp-url'); if(cu){ cu.textContent='stressout-seven.vercel.app'; }
   document.getElementById('narrative').innerHTML=`<p style="font-family:'Gowun Batang',serif;color:${curType.color};font-size:28px;margin-bottom:14px;">${curType.line}</p>`+curType.body.join('');
 
   const gf=document.getElementById('gaugeFill');
@@ -1309,53 +1309,95 @@ function fmtKDateTime(d){
 }
 
 /* ---------- share ---------- */
-const SHARE_BASE='https://stress-out.app';
+const SHARE_BASE='https://stressout-seven.vercel.app';
 function siteOrigin(){try{if(location&&location.protocol&&location.protocol.indexOf('http')===0)return location.origin;}catch(e){}return SHARE_BASE;}
 function resultUrl(){
   try{if(location&&location.protocol&&location.protocol.indexOf('http')===0)
     return location.origin+location.pathname+'#r='+encodeURIComponent((curType&&curType.code)||'SO-72');}catch(e){}
-  return SHARE_BASE+'/r/'+((curType&&curType.code)||'SO-72');
+  return SHARE_BASE+'/#r='+((curType&&curType.code)||'SO-72');
 }
 function shareText(){return '내 스트레스 지수는 '+(curScore||72)+'점, ‘'+((curType&&curType.name)||'끓기 직전의 여름')+'’ 🍉 5분 대화로 알아보는 Stress OUT. 너의 지수도 궁금해 → '+resultUrl();}
 function isMobile(){return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);}
 
 /* ════════════════════════════════════════════════════════════════
-   카카오톡 공유를 진짜로 작동시키려면, 아래 따옴표 사이에
-   본인 카카오 디벨로퍼스 앱의 'JavaScript 키'를 넣으세요.
-   (키가 비어 있으면 카카오 공유창은 뜰 수 없고, 기본 공유시트나
-    문구 복사로 자동 대체됩니다.)
-   발급: https://developers.kakao.com → 내 애플리케이션 → 앱 키 → JavaScript 키
-   그리고 [플랫폼] → Web에 이 사이트 도메인을 등록해야 합니다.
+   카카오톡 공유 설정
+   1) 아래 KAKAO_JS_KEY 에 카카오 디벨로퍼스 'JavaScript 키'를 넣으세요.
+      발급: https://developers.kakao.com → 내 애플리케이션 → 앱 키 → JavaScript 키
+   2) 카카오 개발자 콘솔 [내 애플리케이션] → [플랫폼] → [Web] 에
+      사이트 도메인을 아래 주소로 등록하세요:
+            https://stressout-seven.vercel.app
+   3) [카카오 로그인] 또는 [메시지] 사용을 위해 [플랫폼]에 Web 등록이
+      되어 있어야 Kakao.Share.sendDefault 가 동작합니다.
+   (키가 비어 있으면 카카오 공유창은 뜰 수 없고, 기본 공유시트/문구 복사로
+    자동 대체됩니다.)
    ════════════════════════════════════════════════════════════════ */
-const KAKAO_JS_KEY=''; // ← 예: 'a1b2c3d4...'  여기에 JavaScript 키 입력
+const KAKAO_JS_KEY=''; // ← 여기에 JavaScript 키 입력  예: '0a1b2c3d4e5f...'
+const SHARE_DOMAIN='https://stressout-seven.vercel.app'; // 배포 도메인(공유 링크/이미지 기준)
+const SHARE_IMAGE_URL=SHARE_DOMAIN+'/og.png';            // 공유 카드 썸네일 (없으면 카카오 기본 처리)
+
 function ensureKakao(cb){
-  if(!KAKAO_JS_KEY){ cb(false); return; }
-  if(window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()){ cb(true); return; }
-  if(window.Kakao){ try{window.Kakao.init(KAKAO_JS_KEY);}catch(e){} cb(window.Kakao.isInitialized()); return; }
+  if(!KAKAO_JS_KEY){ console.log('[Kakao] JavaScript 키가 비어 있습니다. KAKAO_JS_KEY 를 설정하세요.'); cb(false); return; }
+  if(window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()){ console.log('[Kakao] 이미 초기화됨'); cb(true); return; }
+  if(window.Kakao){
+    try{ window.Kakao.init(KAKAO_JS_KEY); console.log('[Kakao] init 완료, initialized=', window.Kakao.isInitialized()); }
+    catch(e){ console.error('[Kakao] init 실패:', e); }
+    cb(window.Kakao.isInitialized()); return;
+  }
+  console.log('[Kakao] SDK 로드 시작…');
   const s=document.createElement('script');
   s.src='https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js';
-  s.onload=()=>{ try{window.Kakao.init(KAKAO_JS_KEY);}catch(e){} cb(window.Kakao&&window.Kakao.isInitialized&&window.Kakao.isInitialized()); };
-  s.onerror=()=>cb(false);
+  s.onload=()=>{
+    try{ window.Kakao.init(KAKAO_JS_KEY); console.log('[Kakao] SDK 로드+init 완료, initialized=', window.Kakao.isInitialized()); }
+    catch(e){ console.error('[Kakao] SDK 로드 후 init 실패:', e); }
+    cb(window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized());
+  };
+  s.onerror=(e)=>{ console.error('[Kakao] SDK 스크립트 로드 실패:', e); cb(false); };
   document.head.appendChild(s);
 }
+
 function openShare(ch){
   if(ch==='link'){
     copyText(resultUrl()).then(()=>toast('🌊 결과 링크를 복사했어요')).catch(()=>linkSheet('결과 링크 복사','아래 링크를 길게 눌러 복사하세요',resultUrl()));
     return;
   }
   if(ch==='kakao'){
-    const text=shareText(), url=resultUrl();
+    const text=shareText();
+    const url=resultUrl();
+    console.log('[Kakao] 공유 시도 — url:', url);
     ensureKakao(function(ok){
-      // 1) 카카오 JS 키가 있으면 실제 카카오톡 공유창
-      if(ok && window.Kakao && window.Kakao.Share){
-        try{ window.Kakao.Share.sendDefault({objectType:'feed',
-          content:{title:'Stress OUT 스트레스 진단',description:'5분 대화로 알아보는 나의 스트레스 지수 🌴',imageUrl:siteOrigin()+'/og.png',link:{mobileWebUrl:url,webUrl:url}},
-          buttons:[{title:'나도 진단하기',link:{mobileWebUrl:url,webUrl:url}}]}); return; }catch(e){}
+      // 1) 카카오 JS 키가 있고 초기화 성공 → 실제 카카오톡 공유창
+      if(ok && window.Kakao && window.Kakao.Share && typeof window.Kakao.Share.sendDefault==='function'){
+        try{
+          window.Kakao.Share.sendDefault({
+            objectType:'feed',
+            content:{
+              title:'Stress OUT 스트레스 진단',
+              description:'5분 대화로 알아보는 나의 스트레스 지수 🌴',
+              imageUrl: SHARE_IMAGE_URL,
+              link:{ mobileWebUrl: url, webUrl: url }
+            },
+            buttons:[{
+              title:'나도 진단하기',
+              link:{ mobileWebUrl: url, webUrl: url }
+            }]
+          });
+          console.log('[Kakao] sendDefault 호출 성공');
+          return;
+        }catch(e){
+          console.error('[Kakao] sendDefault 실패:', e);
+          // 실패 시 아래 폴백으로 진행
+        }
+      }else{
+        console.log('[Kakao] 키 미설정 또는 초기화 실패 → 기본 공유/복사로 대체 (ok=', ok, ')');
       }
-      // 2) 키가 없으면 OS 기본 공유시트(모바일/일부 PC) — 여기서 카카오톡 선택 가능
+      // 2) 키가 없거나 실패하면 OS 기본 공유시트(모바일/일부 PC)
       if(navigator.share){
         navigator.share({title:'Stress OUT 스트레스 진단', text:text, url:url})
-          .catch(()=>{ copyText(text).then(()=>toast('🌊 공유 문구를 복사했어요 — 카카오톡에 붙여넣기 하세요')).catch(()=>linkSheet('카카오톡으로 공유','아래 문구를 복사해 카카오톡에 붙여넣으세요',text)); });
+          .then(()=>console.log('[Share] navigator.share 성공'))
+          .catch((err)=>{
+            console.log('[Share] navigator.share 취소/실패:', err);
+            copyText(text).then(()=>toast('🌊 공유 문구를 복사했어요 — 카카오톡에 붙여넣기 하세요')).catch(()=>linkSheet('카카오톡으로 공유','아래 문구를 복사해 카카오톡에 붙여넣으세요',text));
+          });
         return;
       }
       // 3) 공유 API도 없으면 문구 복사
