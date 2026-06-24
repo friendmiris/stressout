@@ -81,6 +81,61 @@
     .screen.active{overflow:visible;}
     .screen[data-screen="chat"].active{min-height:calc(100vh - 44px); overflow:hidden;}
   }
+  /* ── 모바일 전용(≤767px): 글씨·요소를 한 단계 작게 (PC/태블릿은 그대로) ── */
+  @media (max-width:767px){
+    /* 본문/대화/선택지 */
+    .bub-a,.bub-m{font-size:18.5px; line-height:1.6;}
+    .opt{font-size:18px; padding:13px 15px;}
+    .opt .lead{font-size:18.5px;} .opt .sub2{font-size:15px;}
+    .narr{font-size:18.5px;} .narr .pull{font-size:21px;}
+    .sub{font-size:17px;}
+    .rhint{font-size:15.5px;}
+    .chatInput,.typebar input{font-size:17px;}
+    .replies .typebar input{font-size:17px;}
+    /* 헤더/진행 */
+    .chead .nm{font-size:18px;} .chead .st{font-size:13.5px;} .back{font-size:16px;}
+    /* 랜딩 */
+    .ttl{font-size:clamp(25px,7.2vw,30px); line-height:1.4;}
+    .badge{font-size:14.5px;}
+    .countpill{font-size:16px;} .lfoot{font-size:15px;}
+    .floaties{font-size:30px;}
+    /* 결과 */
+    .r-kicker{font-size:14px;}
+    .r-type{font-size:clamp(30px,8.5vw,38px);} .r-type small{font-size:14px;}
+    .gauge-num{font-size:clamp(46px,13vw,58px);}
+    .r-tag{font-size:14.5px;}
+    .sec-label .tt{font-size:20px;} .sec-label .en{font-size:12.5px;}
+    .score-nm{font-size:17px;} .score-nm .lab{font-size:14px;} .score-vv{font-size:19px;}
+    .score-meta{font-size:14.5px;}
+    .sit .h{font-size:17px;} .sit .b{font-size:16px;}
+    .grow .gh{font-size:17px;} .grow .gb{font-size:16px;} .grow .try{font-size:15px;} .grow .n{font-size:21px;}
+    /* 잠긴 분석 카드 */
+    .locked-item .lh{font-size:18px;} .locked-item .lb{font-size:15.5px;} .locked-item .lscore{font-size:20px;}
+    .locked-h{font-size:20px;} .locked-d{font-size:16px;} .locked-btn{font-size:17px;} .locked-mini{font-size:14.5px;}
+    /* 프로그램 안내 */
+    .ses-hero h2{font-size:22px;} .ses-hero .meta{font-size:15px;} .ses-hero .ticket{font-size:13.5px;}
+    .ses-lede{font-size:17px;} .ses-sechead .stt{font-size:18px;}
+    .step .sh{font-size:17px;} .step .se{font-size:13px;} .step .sd{font-size:15px;}
+    .ses-info .ich .il{font-size:14px;} .ses-info .ich .iv{font-size:17px;} .ses-info .ich .iv small{font-size:14px;}
+    .ses-note .nh{font-size:17px;} .ses-note .nb{font-size:16.5px;}
+    .review .stars{font-size:17px;} .review .rtext{font-size:16.5px;} .review .rwho{font-size:15px;}
+    .ses-disc{font-size:14px;}
+    /* 신청 폼 */
+    .apply-hero h2{font-size:21px;} .apply-hero p{font-size:15px;} .apply-hero .ticket{font-size:13.5px;}
+    .field>label{font-size:17px;} .field>label .multi,.field>label .opt-tag{font-size:14.5px;}
+    .inp{font-size:17px; padding:13px 15px;} textarea.inp{font-size:17px;}
+    .choice{font-size:16.5px; padding:10px 14px;}
+    .cal-head .cm{font-size:19px;} .cal-cell{font-size:17px;} .cal-dow{font-size:14px;} .cal-picked{font-size:15.5px;}
+    .check .ct{font-size:15px;} .privacy{font-size:13.5px;}
+    /* 버튼 */
+    .cta{font-size:18px; padding:15px;}
+    /* 완료/공유 */
+    .done h2{font-size:22px;} .done p{font-size:17px;} .done .recap .rr{font-size:18px;} .done .recap .rr .k{font-size:15px;}
+    .cp-top .ty{font-size:21px;} .cp-top .sl{font-size:15px;} .cp-meta{font-size:13.5px;}
+    .sbtn{font-size:18px;} .share-q{font-size:15px;}
+    /* 로딩 */
+    .load-t{font-size:21px;} .load-s{font-size:16.5px;} .lstep{font-size:16px;}
+  }
   /* 태블릿 */
   @media (min-width:768px){
     body{padding:30px 20px 50px;}
@@ -90,8 +145,8 @@
       display:grid; grid-template-columns:1fr 1fr; gap:0 20px; align-items:start;}
     .device[data-screen-active="apply"] .form .field{margin-bottom:18px;}
     .device[data-screen-active="apply"] .form .f-full{grid-column:1 / -1;}
-    .bub-a,.bub-m,.opt,.narr,.sit .b,.grow .gb,.ses-lede,.step .sh{font-size:23.1px;}
-    .sub,.score-meta{font-size:21.2px;}
+    .bub-a,.bub-m,.opt,.narr,.sit .b,.grow .gb,.ses-lede,.step .sh{font-size:21px;}
+    .sub,.score-meta{font-size:19px;}
   }
   /* PC (1024+) — 넓게 펼치고 결과/프로그램 본문을 2열 그리드로 */
   @media (min-width:1024px){
@@ -109,6 +164,14 @@
       max-width:1100px; margin:0 auto; padding-left:32px; padding-right:32px;}
     .device[data-screen-active="result"] .r-body .narr-sec{grid-column:1 / -1; max-width:760px; margin:0 auto;}
     .device[data-screen-active="result"] .r-body .sec:last-child{grid-column:1 / -1;}
+    /* '오늘 바로 비우는 법' 섹션: 전체 폭 사용 + 항목을 2열로 */
+    .device[data-screen-active="result"] .r-body .sec:has(#growList){grid-column:1 / -1;}
+    .device[data-screen-active="result"] #growList{
+      display:grid; grid-template-columns:1fr 1fr; gap:0 36px; align-items:start;}
+    .device[data-screen-active="result"] #growList .grow{
+      border-bottom:1px dashed var(--line);}
+    /* 2열 마지막 줄(끝 두 항목) 밑줄 제거 */
+    .device[data-screen-active="result"] #growList .grow:nth-last-child(-n+2){border-bottom:none;}
 
     /* 프로그램 안내: 본문 단계와 정보 카드 폭 활용 */
     .device[data-screen-active="session"] .ses-body,
