@@ -90,10 +90,16 @@
       border-radius:0 !important; border:none !important; box-shadow:none !important; overflow:visible !important;
       background:linear-gradient(180deg,#F4FCFF 0%,#E8F6FC 100%);
     }
-    /* 화면이 내용 높이만큼 자라고, 페이지 전체가 스크롤되도록 */
+    /* 화면이 내용 높이만큼 자라고, 페이지 전체가 스크롤되도록 (결과·신청 등) */
     .screen{flex:none !important;}
     .screen.active{display:flex !important; height:auto !important; min-height:auto !important; overflow:visible !important;}
-    .screen[data-screen="chat"].active{min-height:100vh; overflow:visible !important;}
+    /* 단, 채팅 화면만은 고정 높이 + 입력창 하단 고정 + 대화영역만 스크롤 (zoom 0.82 보정: 100/0.82≈122vh) */
+    .device[data-screen-active="chat"]{height:122vh !important; min-height:122vh !important; overflow:hidden !important; position:fixed; top:0; left:0; right:0;}
+    .screen[data-screen="chat"].active{height:122vh !important; min-height:122vh !important; max-height:122vh !important; overflow:hidden !important; display:flex !important; flex-direction:column !important;}
+    .screen[data-screen="chat"].active .chead{flex:0 0 auto !important;}
+    .screen[data-screen="chat"].active .prail{flex:0 0 auto !important;}
+    .screen[data-screen="chat"].active .chat{flex:1 1 auto !important; min-height:0 !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch;}
+    .screen[data-screen="chat"].active .replies{flex:0 0 auto !important;}
   }
   @media (max-width:480px){
     .device{height:auto !important; min-height:100vh;}
