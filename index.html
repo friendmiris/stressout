@@ -93,9 +93,10 @@
     /* 화면이 내용 높이만큼 자라고, 페이지 전체가 스크롤되도록 (결과·신청 등) */
     .screen{flex:none !important;}
     .screen.active{display:flex !important; height:auto !important; min-height:auto !important; overflow:visible !important;}
-    /* 단, 채팅 화면만은 고정 높이 + 입력창 하단 고정 + 대화영역만 스크롤 (zoom 0.82 보정: 100/0.82≈122vh) */
-    .device[data-screen-active="chat"]{height:122vh !important; min-height:122vh !important; overflow:hidden !important; position:fixed; top:0; left:0; right:0;}
-    .screen[data-screen="chat"].active{height:122vh !important; min-height:122vh !important; max-height:122vh !important; overflow:hidden !important; display:flex !important; flex-direction:column !important;}
+    /* 단, 채팅 화면만은 고정 높이 + 입력창 하단 고정 + 대화영역만 스크롤 */
+    /* dvh = 브라우저 툴바 제외한 실제 보이는 높이 (입력창이 툴바에 안 가림). zoom 0.82 보정: 100/0.82≈122 */
+    .device[data-screen-active="chat"]{height:122vh !important; height:122dvh !important; min-height:0 !important; overflow:hidden !important; position:fixed; top:0; left:0; right:0;}
+    .screen[data-screen="chat"].active{height:122vh !important; height:122dvh !important; min-height:0 !important; max-height:122vh !important; max-height:122dvh !important; overflow:hidden !important; display:flex !important; flex-direction:column !important;}
     .screen[data-screen="chat"].active .chead{flex:0 0 auto !important;}
     .screen[data-screen="chat"].active .prail{flex:0 0 auto !important;}
     .screen[data-screen="chat"].active .chat{flex:1 1 auto !important; min-height:0 !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch;}
@@ -129,7 +130,7 @@
     .chatInput,.typebar input{font-size:17px !important;}
     .replies .typebar input{font-size:17px !important;}
     .chat{padding:14px 13px !important; gap:9px !important;}
-    .replies{padding:0 13px 11px !important;}
+    .replies{padding:0 13px calc(11px + env(safe-area-inset-bottom)) !important;}
     .opt{margin-bottom:7px;}
     /* 헤더/진행 — 한 줄 유지, 칸 축소 */
     .chead{padding:10px 13px !important; gap:8px !important;}
