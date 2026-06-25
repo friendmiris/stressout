@@ -127,14 +127,14 @@
     .chead .ava{width:28px !important; height:28px !important;}
     .chead .nm{font-size:15px !important; font-family:'Pretendard',sans-serif !important;} .chead .st{font-size:11px !important;} .back{font-size:12.5px !important;}
     /* 랜딩 */
-    .landing{padding:24px 20px 22px !important;}
-    .ttl{font-size:clamp(19px,5.4vw,23px) !important; line-height:1.4 !important;}
-    .badge{font-size:12.5px !important;}
-    .sub{font-size:13.5px !important;}
-    .countpill{font-size:13px !important;} .lfoot{font-size:12.5px !important;}
-    .floaties{font-size:24px !important;}
-    .landing .big .l1{font-size:clamp(42px,12vw,54px) !important;}
-    .landing .big .l2{font-size:clamp(22px,6.5vw,30px) !important;}
+    .landing{padding:28px 22px 26px !important;}
+    .ttl{font-size:clamp(22px,6.2vw,27px) !important; line-height:1.42 !important;}
+    .badge{font-size:14px !important;}
+    .sub{font-size:15px !important;}
+    .countpill{font-size:14.5px !important;} .lfoot{font-size:14px !important;}
+    .floaties{font-size:27px !important;}
+    .landing .big .l1{font-size:clamp(48px,14vw,62px) !important;}
+    .landing .big .l2{font-size:clamp(25px,7.5vw,34px) !important;}
     /* 결과 */
     .r-hero{padding:24px 18px 20px !important;}
     .r-kicker{font-size:12px !important;}
@@ -628,7 +628,7 @@
   <section class="screen active" data-screen="landing">
     <div class="sky" id="sky1"></div>
     <div class="landing">
-      <span class="badge">☀ Stress OUT in Summer · v7</span>
+      <span class="badge">☀ Stress OUT in Summer</span>
       <div class="big" style="margin-top:26px;">
         <span class="l1 fred">Stress <span class="out">OUT</span></span>
         <span class="l2">in Summer</span>
@@ -947,10 +947,12 @@ device.setAttribute('data-screen-active','landing');
 function go(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active', s.dataset.screen===name));
   device.setAttribute('data-screen-active', name);
-  if(name==='chat' && document.getElementById('chat').children.length===0) resetChat();
-  if(name==='loading') runLoading();
-  if(name==='result') renderResult();
-  if(name==='apply') buildForm();
+  try{
+    if(name==='chat' && document.getElementById('chat').children.length===0) resetChat();
+    if(name==='loading') runLoading();
+    if(name==='result') renderResult();
+    if(name==='apply') buildForm();
+  }catch(e){ console.error('화면 전환 처리 오류('+name+'):', e); }
   const active=document.querySelector('.screen.active');
   if(active) active.scrollTop=0;
   device.scrollTop=0; window.scrollTo({top:0,behavior:'smooth'});
@@ -1060,15 +1062,26 @@ function resetChat(){turn=1;stressHits=0;setProgress();document.getElementById('
 /* ---------- loading ---------- */
 let loadTimer=null;
 function runLoading(){
-  const arc=document.getElementById('loadArc');arc.style.transition='none';arc.style.strokeDashoffset='364';void arc.offsetWidth;
-  arc.style.transition='stroke-dashoffset 3.4s ease';arc.style.strokeDashoffset='0';
-  const steps=['감정의 결 스캔','스트레스 신호 모으기','마음 온도 측정','유형 매칭'];
-  const sw=document.getElementById('loadSteps');
-  sw.innerHTML=steps.map((s,i)=>`<div class="lstep" data-i="${i}"><span class="tick">✓</span>${s}</div>`).join('');
-  const texts=['마음의 온도를 재는 중','반복 신호를 모으는 중','스트레스 지수 계산 중'];
-  let i=0;const lt=document.getElementById('loadT');clearInterval(loadTimer);
-  loadTimer=setInterval(()=>{lt.textContent=texts[(++i)%texts.length];const st=sw.querySelector(`[data-i="${(i-1)%steps.length}"]`);if(st)st.classList.add('on');},850);
-  setTimeout(()=>{sw.querySelectorAll('.lstep').forEach(e=>e.classList.add('on'));clearInterval(loadTimer);go('result');},3500);
+  // 어떤 경우에도 결과로 넘어가도록 이중 안전장치
+  let moved=false;
+  const goResult=()=>{ if(moved) return; moved=true; clearInterval(loadTimer); go('result'); };
+  try{
+    const arc=document.getElementById('loadArc');
+    if(arc){arc.style.transition='none';arc.style.strokeDashoffset='364';void arc.offsetWidth;
+      arc.style.transition='stroke-dashoffset 3.4s ease';arc.style.strokeDashoffset='0';}
+    const steps=['감정의 결 스캔','스트레스 신호 모으기','마음 온도 측정','유형 매칭'];
+    const sw=document.getElementById('loadSteps');
+    if(sw){sw.innerHTML=steps.map((s,i)=>`<div class="lstep" data-i="${i}"><span class="tick">✓</span>${s}</div>`).join('');}
+    const texts=['마음의 온도를 재는 중','반복 신호를 모으는 중','스트레스 지수 계산 중'];
+    let i=0;const lt=document.getElementById('loadT');clearInterval(loadTimer);
+    loadTimer=setInterval(()=>{if(lt)lt.textContent=texts[(++i)%texts.length];if(sw){const st=sw.querySelector(`[data-i="${(i-1)%steps.length}"]`);if(st)st.classList.add('on');}},850);
+    setTimeout(()=>{if(sw)sw.querySelectorAll('.lstep').forEach(e=>e.classList.add('on'));goResult();},3500);
+  }catch(e){
+    console.error('로딩 처리 중 오류 — 바로 결과로 이동:', e);
+    goResult();
+  }
+  // 혹시 위 타이머가 동작 안 해도 4.5초 뒤 강제로 결과 표시
+  setTimeout(goResult, 4500);
 }
 
 /* ---------- result data ---------- */
