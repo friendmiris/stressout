@@ -83,14 +83,17 @@
     /* 모바일: 화면 전체 배율 축소 (글씨가 큰 문제를 통째로 해결) */
     html{zoom:0.82;}
     /* 둥근 폰 프레임 제거 → 화면 전체를 풀스크린으로 사용 (한눈에 보이게) */
+    html,body{height:auto !important; min-height:100%; overflow-y:auto !important; -webkit-overflow-scrolling:touch;}
     body{padding:0 !important; margin:0 !important; align-items:stretch; background:linear-gradient(180deg,#F4FCFF 0%,#E8F6FC 100%);}
     .device{
       max-width:100% !important; width:100% !important; height:auto !important; min-height:100vh;
-      border-radius:0 !important; border:none !important; box-shadow:none !important;
+      border-radius:0 !important; border:none !important; box-shadow:none !important; overflow:visible !important;
       background:linear-gradient(180deg,#F4FCFF 0%,#E8F6FC 100%);
     }
-    .screen.active{overflow-y:visible;}
-    .screen[data-screen="chat"].active{min-height:100vh; overflow:visible;}
+    /* 화면이 내용 높이만큼 자라고, 페이지 전체가 스크롤되도록 */
+    .screen{flex:none !important;}
+    .screen.active{display:flex !important; height:auto !important; min-height:auto !important; overflow:visible !important;}
+    .screen[data-screen="chat"].active{min-height:100vh; overflow:visible !important;}
   }
   @media (max-width:480px){
     .device{height:auto !important; min-height:100vh;}
@@ -107,84 +110,84 @@
     /* 착시 그림: 모바일에서 작게 + 캡션 진하게 */
     .illus svg{width:130px !important; height:150px !important;}
     .illus{padding:10px !important; margin-top:8px !important;}
-    .illus .cap{font-size:11.5px !important; color:#5A8593 !important;}
+    .illus .cap{font-size:14.5px !important; color:#5A8593 !important;}
     /* 본문/대화/선택지 */
-    .bub-a,.bub-m{font-size:13.5px !important; line-height:1.5 !important;}
+    .bub-a,.bub-m{font-size:17px !important; line-height:1.5 !important;}
     .row{max-width:95% !important;}
     .bub-a,.bub-m{padding:10px 13px !important;}
-    .opt{font-size:13px !important; padding:9px 12px !important;}
-    .opt .lead{font-size:13.5px !important;} .opt .sub2{font-size:11.5px !important;}
-    .narr{font-size:14px !important;} .narr .pull{font-size:15px !important; padding:10px 12px !important; margin:12px 0 !important;}
-    .sub{font-size:13.5px !important;}
-    .rhint{font-size:12px !important;}
-    .chatInput,.typebar input{font-size:13.5px !important;}
-    .replies .typebar input{font-size:13.5px !important;}
+    .opt{font-size:16px !important; padding:9px 12px !important;}
+    .opt .lead{font-size:17px !important;} .opt .sub2{font-size:14.5px !important;}
+    .narr{font-size:17.5px !important;} .narr .pull{font-size:19px !important; padding:10px 12px !important; margin:12px 0 !important;}
+    .sub{font-size:17px !important;}
+    .rhint{font-size:15px !important;}
+    .chatInput,.typebar input{font-size:17px !important;}
+    .replies .typebar input{font-size:17px !important;}
     .chat{padding:14px 13px !important; gap:9px !important;}
     .replies{padding:0 13px 11px !important;}
     .opt{margin-bottom:7px;}
     /* 헤더/진행 — 한 줄 유지, 칸 축소 */
     .chead{padding:10px 13px !important; gap:8px !important;}
     .chead .ava{width:28px !important; height:28px !important;}
-    .chead .nm{font-size:15px !important; font-family:'Pretendard',sans-serif !important;} .chead .st{font-size:11px !important;} .back{font-size:12.5px !important;}
+    .chead .nm{font-size:19px !important; font-family:'Pretendard',sans-serif !important;} .chead .st{font-size:14px !important;} .back{font-size:15.5px !important;}
     /* 랜딩 */
     .landing{padding:28px 22px 26px !important;}
     .ttl{font-size:clamp(22px,6.2vw,27px) !important; line-height:1.42 !important;}
-    .badge{font-size:14px !important;}
-    .sub{font-size:15px !important;}
-    .countpill{font-size:14.5px !important;} .lfoot{font-size:14px !important;}
-    .floaties{font-size:27px !important;}
+    .badge{font-size:17.5px !important;}
+    .sub{font-size:19px !important;}
+    .countpill{font-size:18px !important;} .lfoot{font-size:17.5px !important;}
+    .floaties{font-size:34px !important;}
     .landing .big .l1{font-size:clamp(48px,14vw,62px) !important;}
     .landing .big .l2{font-size:clamp(25px,7.5vw,34px) !important;}
     /* 결과 */
     .r-hero{padding:24px 18px 20px !important;}
-    .r-kicker{font-size:12px !important;}
-    .r-type{font-size:clamp(23px,6.5vw,30px) !important;} .r-type small{font-size:12px !important;}
-    .gauge-num{font-size:clamp(38px,10.5vw,48px) !important;} .gauge-num .unit{font-size:16px !important;}
-    .gauge-scale{font-size:11px !important;}
-    .r-tag{font-size:12.5px !important;}
-    .sec-label .tt{font-size:16px !important;} .sec-label .en{font-size:10.5px !important;}
-    .score-nm{font-size:14px !important;} .score-nm .lab{font-size:12px !important;} .score-vv{font-size:15px !important;}
-    .score-meta{font-size:12.5px !important;}
-    .sit .h{font-size:14px !important;} .sit .b{font-size:13px !important;} .sit .ic{width:36px !important;height:36px !important;font-size:20px !important;}
-    .grow .gh{font-size:14px !important;} .grow .gb{font-size:13px !important;} .grow .try{font-size:12.5px !important;} .grow .n{font-size:17px !important;}
+    .r-kicker{font-size:15px !important;}
+    .r-type{font-size:clamp(23px,6.5vw,30px) !important;} .r-type small{font-size:15px !important;}
+    .gauge-num{font-size:clamp(38px,10.5vw,48px) !important;} .gauge-num .unit{font-size:20px !important;}
+    .gauge-scale{font-size:14px !important;}
+    .r-tag{font-size:15.5px !important;}
+    .sec-label .tt{font-size:20px !important;} .sec-label .en{font-size:13px !important;}
+    .score-nm{font-size:17.5px !important;} .score-nm .lab{font-size:15px !important;} .score-vv{font-size:19px !important;}
+    .score-meta{font-size:15.5px !important;}
+    .sit .h{font-size:17.5px !important;} .sit .b{font-size:16px !important;} .sit .ic{width:36px !important;height:36px !important;font-size:25px !important;}
+    .grow .gh{font-size:17.5px !important;} .grow .gb{font-size:16px !important;} .grow .try{font-size:15.5px !important;} .grow .n{font-size:21px !important;}
     /* 잠긴 분석 카드 */
-    .locked-item .lh{font-size:14px !important;} .locked-item .lb{font-size:13px !important;} .locked-item .lscore{font-size:16px !important;}
-    .locked-h{font-size:16px !important;} .locked-d{font-size:13px !important;} .locked-btn{font-size:14px !important;} .locked-mini{font-size:12px !important;}
+    .locked-item .lh{font-size:17.5px !important;} .locked-item .lb{font-size:16px !important;} .locked-item .lscore{font-size:20px !important;}
+    .locked-h{font-size:20px !important;} .locked-d{font-size:16px !important;} .locked-btn{font-size:17.5px !important;} .locked-mini{font-size:15px !important;}
     /* 프로그램 안내 */
     .ses-hero{padding:22px 18px 18px !important;}
-    .ses-hero h2{font-size:17px !important;} .ses-hero .meta{font-size:12.5px !important;} .ses-hero .ticket{font-size:11.5px !important;}
-    .ses-lede{font-size:14px !important; padding:15px 17px 4px !important;} .ses-sechead .stt{font-size:15px !important;}
-    .step .sh{font-size:14px !important;} .step .se{font-size:11px !important;} .step .sd{font-size:12.5px !important;} .step .num{width:27px !important;height:27px !important;font-size:15px !important;}
-    .ses-info .ich .il{font-size:12px !important;} .ses-info .ich .iv{font-size:14px !important;} .ses-info .ich .iv small{font-size:12px !important;}
-    .ses-note .nh{font-size:14px !important;} .ses-note .nb{font-size:13.5px !important;}
-    .review .stars{font-size:14px !important;} .review .rtext{font-size:13.5px !important;} .review .rwho{font-size:12.5px !important;}
-    .ses-disc{font-size:12px !important;}
+    .ses-hero h2{font-size:21px !important;} .ses-hero .meta{font-size:15.5px !important;} .ses-hero .ticket{font-size:14.5px !important;}
+    .ses-lede{font-size:17.5px !important; padding:15px 17px 4px !important;} .ses-sechead .stt{font-size:19px !important;}
+    .step .sh{font-size:17.5px !important;} .step .se{font-size:14px !important;} .step .sd{font-size:15.5px !important;} .step .num{width:27px !important;height:27px !important;font-size:19px !important;}
+    .ses-info .ich .il{font-size:15px !important;} .ses-info .ich .iv{font-size:17.5px !important;} .ses-info .ich .iv small{font-size:15px !important;}
+    .ses-note .nh{font-size:17.5px !important;} .ses-note .nb{font-size:17px !important;}
+    .review .stars{font-size:17.5px !important;} .review .rtext{font-size:17px !important;} .review .rwho{font-size:15.5px !important;}
+    .ses-disc{font-size:15px !important;}
     /* 신청 폼 */
     .apply-hero{padding:20px 18px 14px !important;}
-    .apply-hero h2{font-size:17px !important;} .apply-hero p{font-size:13px !important;} .apply-hero .ticket{font-size:11.5px !important;}
-    .field>label{font-size:14px !important;} .field>label .multi,.field>label .opt-tag{font-size:12px !important;}
-    .inp{font-size:14.5px !important; padding:11px 13px !important;} textarea.inp{font-size:14.5px !important;}
+    .apply-hero h2{font-size:21px !important;} .apply-hero p{font-size:16px !important;} .apply-hero .ticket{font-size:14.5px !important;}
+    .field>label{font-size:17.5px !important;} .field>label .multi,.field>label .opt-tag{font-size:15px !important;}
+    .inp{font-size:18px !important; padding:11px 13px !important;} textarea.inp{font-size:18px !important;}
     /* 선택 칩: 3열 균일 그리드 */
     .choices{display:grid; grid-template-columns:repeat(3,1fr); gap:7px !important;}
-    .choice{font-size:13px !important; padding:9px 6px !important; text-align:center; border-radius:11px !important;
+    .choice{font-size:16px !important; padding:9px 6px !important; text-align:center; border-radius:11px !important;
       display:flex; align-items:center; justify-content:center; min-height:40px !important; line-height:1.2 !important;}
     /* 달력 */
     .cal{padding:11px 8px !important;}
     .cal-head{gap:9px !important; margin-bottom:9px;}
-    .cal-head .cm{font-size:15px !important;} .cal-nav{width:28px !important;height:28px !important;font-size:16px !important;}
+    .cal-head .cm{font-size:19px !important;} .cal-nav{width:28px !important;height:28px !important;font-size:20px !important;}
     .cal-grid{gap:3px !important;}
-    .cal-cell{font-size:13.5px !important; border-radius:9px !important;}
-    .cal-dow{font-size:12px !important; padding:3px 0 !important;}
-    .cal-picked{font-size:12.5px !important;}
-    .check .ct{font-size:13px !important;} .privacy{font-size:11.5px !important;}
+    .cal-cell{font-size:17px !important; border-radius:9px !important;}
+    .cal-dow{font-size:15px !important; padding:3px 0 !important;}
+    .cal-picked{font-size:15.5px !important;}
+    .check .ct{font-size:16px !important;} .privacy{font-size:14.5px !important;}
     /* 버튼 */
-    .cta{font-size:15px !important; padding:13px !important;}
+    .cta{font-size:19px !important; padding:13px !important;}
     /* 완료/공유 */
-    .done h2{font-size:17px !important;} .done p{font-size:14px !important;} .done .recap .rr{font-size:14px !important;} .done .recap .rr .k{font-size:12.5px !important;}
-    .cp-top .ty{font-size:17px !important;} .cp-top .sl{font-size:13px !important;} .cp-meta{font-size:11.5px !important;}
-    .sbtn{font-size:15px !important;} .share-q{font-size:13px !important;}
+    .done h2{font-size:21px !important;} .done p{font-size:17.5px !important;} .done .recap .rr{font-size:17.5px !important;} .done .recap .rr .k{font-size:15.5px !important;}
+    .cp-top .ty{font-size:21px !important;} .cp-top .sl{font-size:16px !important;} .cp-meta{font-size:14.5px !important;}
+    .sbtn{font-size:19px !important;} .share-q{font-size:16px !important;}
     /* 로딩 */
-    .load-t{font-size:16px !important;} .load-s{font-size:13.5px !important;} .lstep{font-size:13px !important;}
+    .load-t{font-size:20px !important;} .load-s{font-size:17px !important;} .lstep{font-size:16px !important;}
     .load-orb{width:104px !important;height:104px !important;}
   }
   /* 태블릿 */
